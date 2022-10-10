@@ -50,17 +50,19 @@ public class MaxSubArr {
     private void findMaxSum(int[] a, int low, int mid, int high) {
         int leftSum = 0, rightSum = 0;
 
-        for (int i = low; i < mid; i++) {
+        for (int i = low; i <= mid; i++) {
             leftSum += a[i];
             if (max < leftSum) {
                 max = leftSum;
+                start = low;
                 end = i;
             }
         }
 
-        for (int i = mid + 1; i < high; i++) {
+        for (int i = mid + 1; i <= high; i++) {
             rightSum += a[i];
             if (max < rightSum) {
+                max = rightSum;
                 start = mid + 1;
                 end = i;
             }
@@ -69,33 +71,44 @@ public class MaxSubArr {
 
     private void findMaxCrossSum(int[] a, int low, int mid, int high) {
         int crossSum = 0;
-        for (int i = mid; i > low; i--) {
+        int tempStart = mid;
+        int tempEnd = mid + 1;
+        int tempMax = 0;
+        for (int i = mid; i >= low; i--) {
             crossSum += a[i];
-            if (max < crossSum) {
-                max = crossSum;
-                start = i;
+            if (tempMax < crossSum) {
+                tempMax = crossSum;
+                tempStart = i;
             }
+        }
+        crossSum = tempMax;
+        for (int i = mid + 1; i <= high; i++) {
+            crossSum += a[i];
+            if (tempMax < crossSum) {
+                tempMax = crossSum;
+                tempEnd = i;
+            }
+        }
+        if (max < tempMax) {
+            max = tempMax;
+            start = tempStart;
+            end = tempEnd;
         }
 
-        for (int i = mid + 1; i < high; i++) {
-            crossSum += a[i];
-            if (max < crossSum) {
-                max = crossSum;
-                end = i;
-            }
-        }
     }
 
 
     public void kadane(int[] a) {
+        int tempStart = 0;
         for (int i = 0; i < a.length; i++) {
             sum += a[i];
             if (sum < 0) {
                 sum = 0;
-                start = i + 1;
+                tempStart = i + 1;
             }
             if (max < sum) {
                 max = sum;
+                start = tempStart;
                 end = i;
             }
         }
@@ -111,6 +124,10 @@ public class MaxSubArr {
         }
     }
 
+    public int getMax() { return max;}
+    public int getStart() { return start;}
+    public int getEnd() {return end;}
+
     public String toString() {
         StringBuilder string = new StringBuilder();
         for (int j : maxSumArray) {
@@ -119,6 +136,7 @@ public class MaxSubArr {
         string.append("\nStarting day: ").append(start);
         string.append("\nEnding day: ").append(end);
         string.append("\nMax = ").append(max);
+        string.append("\n\n");
         return string.toString();
     }
 }
