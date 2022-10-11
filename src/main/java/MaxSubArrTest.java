@@ -80,12 +80,6 @@ public class MaxSubArrTest {
         testRunTime(array);
     }
     @Test
-    public void test200Integers() {
-        int[] array = RandomArrayUtil.randomArray(200, 100);
-        maxSubArr = new MaxSubArr();
-        testRunTime(array);
-    }
-    @Test
     public void test500Integers() {
         int[] array = RandomArrayUtil.randomArray(500, 100);
         maxSubArr = new MaxSubArr();
@@ -98,14 +92,27 @@ public class MaxSubArrTest {
         testRunTime(array);
     }
     @Test
-    public void test2000Integers() {
-        int[] array = RandomArrayUtil.randomArray(2000, 100);
+    public void test5000Integers() {
+        int[] array = RandomArrayUtil.randomArray(5000, 100);
         maxSubArr = new MaxSubArr();
         testRunTime(array);
     }
     @Test
-    public void test5000Integers() {
-        int[] array = RandomArrayUtil.randomArray(5000, 100);
+    public void test10000Integers() {
+        int[] array = RandomArrayUtil.randomArray(10000, 100);
+        maxSubArr = new MaxSubArr();
+        testRunTime(array);
+    }
+    @Test
+    public void test50000Integers() {
+        int[] array = RandomArrayUtil.randomArray(50000, 100);
+        maxSubArr = new MaxSubArr();
+        testRunTime(array);
+    }
+
+    @Test
+    public void test100000Integers() {
+        int[] array = RandomArrayUtil.randomArray(100000, 100);
         maxSubArr = new MaxSubArr();
         testRunTime(array);
     }
