@@ -3,9 +3,9 @@
  * with three different algorithms, brute force, divide and conquer, and Kadane's algorithm
  */
 public class MaxSubArr {
-    private int start, end;
-    private int max, sum;
-    static int[] maxSumArray;
+    private int start, end;     // starting and ending days
+    private int max, currentSum;       // max sum and current sum
+    static int[] maxSumArray;   // array from start and end index
 
     public MaxSubArr() {
         start = 0;
@@ -19,18 +19,16 @@ public class MaxSubArr {
      * @param a is the array we are finding the max sum of
      */
     public void bruteForce(int[] a) {
-        start = 0;
-        end = 0;
-        for (int i = 0; i < a.length; i++) {
-            for (int j = i; j < a.length; j++) {
-                sum += a[j];
-                if (sum > max) {
-                    max = sum;
-                    start = i;
-                    end = j;
+        for (int startingDay = 0; startingDay < a.length; startingDay++) {
+            for (int currentDay = startingDay; currentDay < a.length; currentDay++) {
+                currentSum += a[currentDay];
+                if (currentSum > max) {
+                    max = currentSum;
+                    start = startingDay;
+                    end = currentDay;
                 }
             }
-            sum = 0;
+            currentSum = 0;
         }
         copyArray(a);
     }
@@ -41,10 +39,6 @@ public class MaxSubArr {
      * @param a is the array we are finding the max sum of
      */
     public void divideAndConquer(int[] a) {
-        start = 0;
-        end = 0;
-        sum = 0;
-        max = 0;
         int high = a.length - 1;
         int low = 0;
         divide(a, low, high);
@@ -77,23 +71,22 @@ public class MaxSubArr {
      * @param high is the upper index
      */
     private void findMaxSum(int[] a, int low, int mid, int high) {
-        int leftSum = 0, rightSum = 0;
-
-        for (int i = low; i <= mid; i++) {
-            leftSum += a[i];
-            if (max < leftSum) {
-                max = leftSum;
+        currentSum = 0;
+        for (int currentDay = low; currentDay <= mid; currentDay++) {
+            currentSum += a[currentDay];
+            if (max < currentSum) {
+                max = currentSum;
                 start = low;
-                end = i;
+                end = currentDay;
             }
         }
-
-        for (int i = mid + 1; i <= high; i++) {
-            rightSum += a[i];
-            if (max < rightSum) {
-                max = rightSum;
+        currentSum = 0;
+        for (int currentDay = mid + 1; currentDay <= high; currentDay++) {
+            currentSum += a[currentDay];
+            if (max < currentSum) {
+                max = currentSum;
                 start = mid + 1;
-                end = i;
+                end = currentDay;
             }
         }
     }
@@ -106,23 +99,23 @@ public class MaxSubArr {
      * @param high the upper index
      */
     private void findMaxCrossSum(int[] a, int low, int mid, int high) {
-        int crossSum = 0;
+        currentSum = 0;
         int tempStart = mid;
         int tempEnd = mid + 1;
         int tempMax = 0;
-        for (int i = mid; i >= low; i--) {
-            crossSum += a[i];
-            if (tempMax < crossSum) {
-                tempMax = crossSum;
-                tempStart = i;
+        for (int currentDay = mid; currentDay >= low; currentDay--) {
+            currentSum += a[currentDay];
+            if (tempMax < currentSum) {
+                tempMax = currentSum;
+                tempStart = currentDay;
             }
         }
-        crossSum = tempMax;
-        for (int i = mid + 1; i <= high; i++) {
-            crossSum += a[i];
-            if (tempMax < crossSum) {
-                tempMax = crossSum;
-                tempEnd = i;
+        currentSum = tempMax;
+        for (int currentDay = mid + 1; currentDay <= high; currentDay++) {
+            currentSum += a[currentDay];
+            if (tempMax < currentSum) {
+                tempMax = currentSum;
+                tempEnd = currentDay;
             }
         }
         if (max < tempMax) {
@@ -139,16 +132,16 @@ public class MaxSubArr {
      */
     public void kadane(int[] a) {
         int tempStart = 0;
-        for (int i = 0; i < a.length; i++) {
-            sum += a[i];
-            if (sum < 0) {
-                sum = 0;
-                tempStart = i + 1;
+        for (int currentDay = 0; currentDay < a.length; currentDay++) {
+            currentSum += a[currentDay];
+            if (currentSum < 0) {
+                currentSum = 0;
+                tempStart = currentDay + 1;
             }
-            if (max < sum) {
-                max = sum;
+            if (max < currentSum) {
+                max = currentSum;
                 start = tempStart;
-                end = i;
+                end = currentDay;
             }
         }
         copyArray(a);
