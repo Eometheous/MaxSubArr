@@ -7,29 +7,37 @@ import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+/**
+ * Runs multiple tests on MaxSubArr.java to make sure
+ * actual results are the same as the expected results from the
+ * given text file
+ */
 public class MaxSubArrTest {
-    private static final int[][] testArrays = new int[10][100];
-    MaxSubArr maxSubArr;
-    double startTime, endTime, totalTime;
-    private final static int[] expectedMax = new int[10];
-    private final static int[] expectedStart = new int[10];
-    private final static int[] expectedEnd = new int[10];
+    private static final int[][] testArrays = new int[10][100]; // an array of 10 arrays holding 100 integers
+    MaxSubArr maxSubArr;                                        // MaxSubArr object to find max sum of an array
+    double startTime, endTime, totalTime;                       // used for calculating runtimes
+    private final static int[] expectedMax = new int[10];       // an array containing the expected max sums
+    private final static int[] expectedStart = new int[10];     // an array containing the expected start days
+    private final static int[] expectedEnd = new int[10];       // an array containing the expected end days
     @BeforeAll
     static void beforeAll() {
 
-        String filename = "maxSumtest.txt";
+        String filename = "maxSumtest.txt";     // file we are reading to get the test arrays
 
         try {
             Scanner scannerTextFile = new Scanner(new File(filename));
-            for (int i = 0; i < 10; i++) {
-                for (int j = 0; j < 100; j++) {
-                    testArrays[i][j] = scannerTextFile.nextInt();
+            for (int i = 0; i < 10; i++) {      // file contains 10 arrays
+                for (int j = 0; j < 100; j++) { // read the 100 integers for the array
+                    testArrays[i][j] = scannerTextFile.nextInt();   // store the integers into the test array
                 }
+
+                // last three integers in each line are the expected max, start day, and end day
+                // read them and store them into their array
                 expectedMax[i] = scannerTextFile.nextInt();
                 expectedStart[i] = scannerTextFile.nextInt();
                 expectedEnd[i] = scannerTextFile.nextInt();
             }
-            scannerTextFile.close();
+            scannerTextFile.close();    // we are done reaidng the file
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
@@ -100,19 +108,21 @@ public class MaxSubArrTest {
         maxSubArr = new MaxSubArr();
         testRunTime(array);
     }
-    @Test
-    public void test50000Integers() {
-        int[] array = RandomArrayUtil.randomArray(50000, 100);
-        maxSubArr = new MaxSubArr();
-        testRunTime(array);
-    }
 
-    @Test
-    public void test100000Integers() {
-        int[] array = RandomArrayUtil.randomArray(100000, 100);
-        maxSubArr = new MaxSubArr();
-        testRunTime(array);
-    }
+    // Only run the tests below if you have a fast machine
+//    @Test
+//    public void test50000Integers() {
+//        int[] array = RandomArrayUtil.randomArray(50000, 100);
+//        maxSubArr = new MaxSubArr();
+//        testRunTime(array);
+//    }
+//
+//    @Test
+//    public void test100000Integers() {
+//        int[] array = RandomArrayUtil.randomArray(100000, 100);
+//        maxSubArr = new MaxSubArr();
+//        testRunTime(array);
+//    }
 
     private void testRunTime(int[] array) {
         for (int i = 0; i < 10; i++) {
