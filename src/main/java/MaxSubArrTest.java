@@ -17,10 +17,7 @@ public class MaxSubArrTest {
     @BeforeAll
     static void beforeAll() {
 
-        final String filePath = "/Desktop/MaxSubArrayTest/maxSumtest.txt";
-        String homePath = System.getenv("HOMEPATH");
-        if (homePath == null) homePath = System.getenv("HOME");
-        String filename = homePath + filePath;
+        String filename = "maxSumtest.txt";
 
         try {
             Scanner scannerTextFile = new Scanner(new File(filename));
