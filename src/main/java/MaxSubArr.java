@@ -1,3 +1,7 @@
+/**
+ * MaxSubArr calculates the maximum possible sum of a given array
+ * with three different algorithms, brute force, divide and conquer, and Kadane's algorithm
+ */
 public class MaxSubArr {
     private int start, end;
     private int max, sum;
@@ -8,6 +12,12 @@ public class MaxSubArr {
         end = 0;
         max = 0;
     }
+
+    /**
+     * Finds the maximum possible sum of array a
+     * using a brute force method.
+     * @param a is the array we are finding the max sum of
+     */
     public void bruteForce(int[] a) {
         start = 0;
         end = 0;
@@ -25,6 +35,11 @@ public class MaxSubArr {
         copyArray(a);
     }
 
+    /**
+     * Finds the maximum possible sum of array a
+     * using a divide and conquer method.
+     * @param a is the array we are finding the max sum of
+     */
     public void divideAndConquer(int[] a) {
         start = 0;
         end = 0;
@@ -36,6 +51,13 @@ public class MaxSubArr {
         copyArray(a);
     }
 
+    /**
+     * Divides the array recursively and then finds the max sum of each division
+     * and the max sum of both division
+     * @param a is the array we are dividing
+     * @param low is the lower index
+     * @param high is the upper index
+     */
     private void divide(int[] a, int low, int high) {
         int mid;
         if (low < high) {
@@ -47,6 +69,13 @@ public class MaxSubArr {
         }
     }
 
+    /**
+     * Finds the max sum of a divided portion of the array
+     * @param a is the array we are finding the max sum of
+     * @param low is the lower index
+     * @param mid is the middle index of the lower and upper index
+     * @param high is the upper index
+     */
     private void findMaxSum(int[] a, int low, int mid, int high) {
         int leftSum = 0, rightSum = 0;
 
@@ -69,6 +98,13 @@ public class MaxSubArr {
         }
     }
 
+    /**
+     * Finds the max sum of crossing two divided sections
+     * @param a the array we are finding the max sum of
+     * @param low the lower index
+     * @param mid the middle index of low and high
+     * @param high the upper index
+     */
     private void findMaxCrossSum(int[] a, int low, int mid, int high) {
         int crossSum = 0;
         int tempStart = mid;
@@ -97,7 +133,10 @@ public class MaxSubArr {
 
     }
 
-
+    /**
+     * Finds the maximum possible sum of array a
+     * @param a the array we are finding the max sum of
+     */
     public void kadane(int[] a) {
         int tempStart = 0;
         for (int i = 0; i < a.length; i++) {
@@ -115,6 +154,11 @@ public class MaxSubArr {
         copyArray(a);
     }
 
+    /**
+     * Copies the array to the maxSumArray with the starting and ending
+     * days
+     * @param a the array we are copying
+     */
     private void copyArray(int[] a) {
         maxSumArray = new int[(end - start) + 1];
         int j = start;
@@ -128,6 +172,7 @@ public class MaxSubArr {
     public int getStart() { return start;}
     public int getEnd() {return end;}
 
+    @Override
     public String toString() {
         StringBuilder string = new StringBuilder();
         for (int j : maxSumArray) {
